@@ -19,7 +19,7 @@ app.use(
   cors({
     origin:
       process.env.NODE_ENV === "production"
-        ? ["https://yourdomain.com"] // Add your production domains
+        ? ["https://yourdomain.com"] // not in use rn
         : ["http://localhost:3000", "http://localhost:3001"], // Development origins
     credentials: true,
   })
@@ -73,7 +73,7 @@ app.get("/", (req, res) => {
     success: true,
     message: "Welcome to Blog API",
     version: "1.0.0",
-    documentation: "/api/v1/docs", // You can add API documentation later
+    documentation: "/api/v1/docs", // not availble rn.
     endpoints: {
       auth: "/api/v1/auth",
       users: "/api/v1/users",
