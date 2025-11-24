@@ -3,6 +3,8 @@ const cors = require("cors");
 const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const { errorHandler, notFound } = require("./middlewares/errorHandler");
+const logger = require("./utils/logger");
+const morgan = require("morgan");
 
 // Route files
 const authRoutes = require("./routes/authRoutes");
@@ -20,7 +22,7 @@ app.use(
     origin:
       process.env.NODE_ENV === "production"
         ? ["https://yourdomain.com"] // not in use rn
-        : ["http://localhost:3000", "http://localhost:3001"], // Development origins
+        : ["http://localhost:5173", "http://localhost:3001"], // Development origins
     credentials: true,
   })
 );
@@ -51,6 +53,9 @@ app.use("/api/v1/auth/register", authLimiter);
 // Body parser middleware
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+// Use morgan for logging HTTP requests
+app.use(morgan("dev"));
 
 // Health check route
 app.get("/health", (req, res) => {
